@@ -6,6 +6,7 @@ declare -A dict
 declare -A dictD
 declare -A dictT
 
+function singlet(){
 h=0
 t=0
 
@@ -14,27 +15,25 @@ for((i=0;i<20;i++))
 do
 	x=$(( RANDOM%2 ))
 	if [ $x -eq 1 ]; then
-#		echo "Heads"
 		dict[$i]="H"
 		((h++))
 	else
-#		echo "Tails"
 		dict[$i]="T"
 		((t++))
 	fi
 done
-echo "${!dict[@]}"
+
 echo "${dict[@]}"
-echo "The value: "
-echo "H: " $h
-echo "T: " $t
 
+perh=$( echo $h $t | awk "BEGIN {print $h/$t*100}" )
+pert=$( echo $h $t | awk "BEGIN {print $t/$h*100}" )
 
-perh=$( echo $h  | awk "BEGIN {print $h/20*100}" )
-pert=$( echo $h  | awk "BEGIN {print $t/20*100}" )
-echo "Percentage of H: "$perh
-echo "Percentage of T: "$pert
+echo "H%: " $perh
+echo "T%: " $pert
 
+}
+
+function double(){
 hh=0
 tt=0
 ht=0
@@ -45,42 +44,34 @@ for((i=0;i<20;i++))
 do
 	y=$((1+RANDOM%4))
 	if [ $y -eq 1 ]; then
-#		echo "HH"
 		dictD[$i]="HH"
 		((hh++))
 	elif [ $y -eq 2 ]; then
-#		echo "HT"
 		dictD[$i]="HT"
 		((ht++))
 	elif [ $y -eq 3 ]; then
-#		echo "TH"
 		dictD[$i]="TH"
 		((th++))
 	elif [ $y -eq 4 ]; then
-#		echo "TT"
 		dictD[$i]="TT"
 		((tt++))
 	fi
 done
 echo "Doublet Dictionary:"
 echo "${dictD[@]}"
-echo "The value: "
-echo "HH: " $hh
-echo "HT: " $ht
-echo "TH: " $th
-echo "TT: " $tt
 
 perhh=$( echo $hh  | awk "BEGIN {print $hh/20*100}" )
 perht=$( echo $ht  | awk "BEGIN {print $ht/20*100}" )
 perth=$( echo $th  | awk "BEGIN {print $th/20*100}" )
 pertt=$( echo $tt  | awk "BEGIN {print $tt/20*100}" )
 
-echo "Percentage of HH: " $perhh
-echo "Percentage of HT: " $perht
-echo "Percentage of TH: " $perth
-echo "Percentage of TT: " $pertt
+echo "%HH: " $perhh
+echo "%HT: " $perht
+echo "%TH: " $perth
+echo "%TT: " $pertt
+}
 
-
+function triple(){
 hhh=0
 htt=0
 hht=0
@@ -96,35 +87,27 @@ for((i=0;i<20;i++))
 do
    y=$((1+RANDOM%8))
    if [ $y -eq 1 ]; then
-#     echo "HHH"
       dictT[$i]="HHH"
       ((hhh++))
    elif [ $y -eq 2 ]; then
-#     echo "HHT"
       dictT[$i]="HHT"
       ((hht++))
    elif [ $y -eq 3 ]; then
-#     echo "HTH"
       dictT[$i]="HTH"
       ((hth++))
    elif [ $y -eq 4 ]; then
-#     echo "HTT"
       dictT[$i]="HTT"
       ((htt++))
    elif [ $y -eq 5 ]; then
-#     echo "THH"
       dictT[$i]="THH"
       ((thh++))
    elif [ $y -eq 6 ]; then
-#     echo "THT"
       dictT[$i]="THT"
       ((tht++))
    elif [ $y -eq 7 ]; then
-#     echo "TTH"
       dictT[$i]="TTH"
       ((tth++))
    elif [ $y -eq 8 ]; then
-#     echo "TTT"
       dictT[$i]="TTT"
       ((ttt++))
    fi
@@ -132,16 +115,6 @@ do
 done
 echo "Triplet Dictionary:"
 echo "${dictT[@]}"
-echo "The value: "
-echo "HHH: " $hhh
-echo "HHT: " $hht
-echo "HTH: " $hth
-echo "HTT: " $htt
-echo "THH: " $thh
-echo "THT: " $tht
-echo "TTH: " $tth
-echo "TTT: " $ttt
-
 
 perhhh=$( echo $hhh  | awk "BEGIN {print $hhh/20*100}" )
 perhht=$( echo $hht  | awk "BEGIN {print $hht/20*100}" )
@@ -152,7 +125,6 @@ pertht=$( echo $tht  | awk "BEGIN {print $tht/20*100}" )
 pertth=$( echo $tth  | awk "BEGIN {print $tth/20*100}" )
 perttt=$( echo $ttt  | awk "BEGIN {print $ttt/20*100}" )
 
-
 echo "Percentage of HHH: " $perhhh
 echo "Percentage of HHT: " $perhht
 echo "Percentage of HTH: " $perhth
@@ -161,3 +133,13 @@ echo "Percentage of THH: " $perthh
 echo "Percentage of THT: " $pertht
 echo "Percentage of TTH: " $pertth
 echo "Percentage of TTT: " $perttt
+}
+
+function main(){
+
+	singlet
+	double
+	triple
+
+}
+main
