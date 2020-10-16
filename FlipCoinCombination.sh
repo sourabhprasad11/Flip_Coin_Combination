@@ -134,21 +134,27 @@ echo "Percentage of TTH: " $pertth
 echo "Percentage of TTT: " $perttt
 }
 
-arr=( $perh $pert $perhh $perht $perth $pertt $perhhh $perhht $perhth $perhtt $perthh $pertht $pertth $perttt )
+function main(){
+
+  singlet
+	double
+	triple
+
+arr=( $perh $pert $perhh $perht $perth $pertt $perhhh $perhht $perhth $perhtt $thh $tht $tth $ttt )
 echo "Array:"
 echo ${!arr[@]}
 echo ${arr[@]}
 
 for((i=0;i<14;i++))
 do
-	for((j=0;j<14-i-1;j++))
-	do
-		if [ ${arr[j]} -lt ${arr[$((j+1))]} ]; then
-			temp=${arr[j]}
-			arr[$j]=${arr[$((j+1))]}
-			arr[$((j+1))]=$temp
-		fi
-	done
+   for((j=0;j<14-i-1;j++))
+   do
+      if [ ${arr[j]} -lt ${arr[$((j+1))]} ]; then
+         temp=${arr[j]}
+         arr[$j]=${arr[$((j+1))]}
+         arr[$((j+1))]=$temp
+      fi
+   done
 
 done
 
@@ -156,11 +162,6 @@ echo "Sorted:"
 echo ${arr[@]}
 echo "The winner is : " ${arr[0]};
 
-function main(){
-
-	singlet
-	double
-	triple
 
 }
 main
