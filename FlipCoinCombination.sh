@@ -3,6 +3,7 @@
 echo "Welcome to the Flip Coin Combination"
 
 declare -A dict
+declare -A dictD
 
 function singlet(){
 h=0
@@ -31,6 +32,7 @@ echo "T%: " $pert
 
 }
 
+function double(){
 hh=0
 tt=0
 ht=0
@@ -41,41 +43,32 @@ for((i=0;i<20;i++))
 do
 	y=$((1+RANDOM%4))
 	if [ $y -eq 1 ]; then
-#		echo "HH"
 		dictD[$i]="HH"
 		((hh++))
 	elif [ $y -eq 2 ]; then
-#		echo "HT"
 		dictD[$i]="HT"
 		((ht++))
 	elif [ $y -eq 3 ]; then
-#		echo "TH"
 		dictD[$i]="TH"
 		((th++))
 	elif [ $y -eq 4 ]; then
-#		echo "TT"
 		dictD[$i]="TT"
 		((tt++))
 	fi
 done
 echo "Doublet Dictionary:"
 echo "${dictD[@]}"
-echo "The value: "
-echo "HH: " $hh
-echo "HT: " $ht
-echo "TH: " $th
-echo "TT: " $tt
 
 perhh=$( echo $hh  | awk "BEGIN {print $hh/20*100}" )
 perht=$( echo $ht  | awk "BEGIN {print $ht/20*100}" )
 perth=$( echo $th  | awk "BEGIN {print $th/20*100}" )
 pertt=$( echo $tt  | awk "BEGIN {print $tt/20*100}" )
 
-echo "Percentage of HH: " $perhh
-echo "Percentage of HT: " $perht
-echo "Percentage of TH: " $perth
-echo "Percentage of TT: " $pertt
-
+echo "%HH: " $perhh
+echo "%HT: " $perht
+echo "%TH: " $perth
+echo "%TT: " $pertt
+}
 
 hhh=0
 htt=0
@@ -180,9 +173,9 @@ echo "Sorted:"
 echo ${arr[@]}
 echo "The winner is : " ${arr[0]};
 
+
 function main(){
-
 	singlet
-
+	double
 }
 main
