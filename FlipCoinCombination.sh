@@ -3,9 +3,8 @@
 echo "Welcome to the Flip Coin Combination"
 
 declare -A dict
-declare -A dictD
-declare -A dictT
 
+function singlet(){
 h=0
 t=0
 
@@ -14,26 +13,23 @@ for((i=0;i<20;i++))
 do
 	x=$(( RANDOM%2 ))
 	if [ $x -eq 1 ]; then
-#		echo "Heads"
 		dict[$i]="H"
 		((h++))
 	else
-#		echo "Tails"
 		dict[$i]="T"
 		((t++))
 	fi
 done
-echo "${!dict[@]}"
+
 echo "${dict[@]}"
-echo "The value: "
-echo "H: " $h
-echo "T: " $t
 
+perh=$( echo $h $t | awk "BEGIN {print $h/$t*100}" )
+pert=$( echo $h $t | awk "BEGIN {print $t/$h*100}" )
 
-perh=$( echo $h  | awk "BEGIN {print $h/20*100}" )
-pert=$( echo $h  | awk "BEGIN {print $t/20*100}" )
-echo "Percentage of H: "$perh
-echo "Percentage of T: "$pert
+echo "H%: " $perh
+echo "T%: " $pert
+
+}
 
 hh=0
 tt=0
@@ -183,3 +179,10 @@ done
 echo "Sorted:"
 echo ${arr[@]}
 echo "The winner is : " ${arr[0]};
+
+function main(){
+
+	singlet
+
+}
+main
